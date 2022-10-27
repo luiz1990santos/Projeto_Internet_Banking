@@ -293,3 +293,90 @@ def listar_contas(contas):
         '''
         print(linha)
     div()
+
+
+try:
+    AGENCIA = '0001'
+    LIMITE_SAQUES = 5
+
+    valor = float()
+    real = float()
+    saldo = float()
+    dolar = float()
+    limite_r = float(2000)
+    limite_d = float(1500)
+    extrato = ''
+    numero_saques = 0
+    usuarios = []
+    contas = []
+
+    while True:
+        opcao = int(menu())
+
+        if opcao == 1:
+            deposito = float(input(f'DIGITE O VALOR DE DEPÓSITO (R$): '))
+            saldo, deposito, extrato = depositar(saldo, deposito, extrato)
+
+        elif opcao == 2:
+            load()
+            div()
+            saque = str(input('''deseja fazer um saque em Real(R) ou Dolar(D)
+            ==> '''))
+            if saque in 'Rr':
+                saque_real = float(input(f'DIGITE A VALOR DO SAQUE(R$): '))
+                saldo, saque_real, extrato , numero_saques = sacar_real(saldo,
+                saque_real, extrato, limite_r, numero_saques, LIMITE_SAQUES,)
+
+            elif saque in 'Dd':
+                saque_dolar = float(input(f'DIGITE A VALOR DO SAQUE(US$): '))
+                saldo, sacar_dolar, extrato, numero_saques = sacar_dolar(dolar,
+                saque_dolar, extrato, limite_d, numero_saques, LIMITE_SAQUES,)
+
+        elif opcao == 3:
+            exibir_extrato(saldo,extrato,dolar)
+
+        elif opcao == 4:
+            cotacao_atual()
+            real = float(input('DIGITE O VALOR EM REAIS PARA COTAÇÃO(R$): '))
+            saldo = comprar_dolar(saldo,real,dolar,valor,extrato,)
+            #PAREI AKI!!!
+
+        elif opcao == 5:
+            #emprestimo = float(input(f'DIGITE O VALOR DE EMPRÉSTIMO QUE DESEJA (R$): '))
+            pass
+
+        elif opcao == 6:
+            criar_usuario(usuarios)
+
+        elif opcao == 7:
+            numero_conta = len(contas) + 1
+            conta = criar_conta(AGENCIA, numero_conta, usuarios)
+            if conta:
+                contas.append(conta)
+
+        elif opcao == 8:
+            listar_contas(contas)
+
+        elif opcao == 0:
+            pul()
+            dec()
+            print(f'SESSÃO ENCERRADA.')
+            dec()
+            break
+        else:
+            pul()
+            dec()
+            print(f'ERRO! ESCOLHA UMA OPÇÃO VÁLIDA.')
+            dec()
+except ValueError:
+    pul()
+    div()
+    print('VALOR DIGITADO INCORRETO! PROGRAMA ENCERRADO.')
+    div()
+
+except KeyboardInterrupt:
+    pul()
+    div()
+    print('VOCÊ ENCERROU O PROGRAMA! VOLTE SEMPRE.')
+    div()
+
